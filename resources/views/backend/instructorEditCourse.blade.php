@@ -54,10 +54,11 @@
                                 <td>{{$course->prerequisite}}</td>
                                 <td>{{$course->discounted_price.'(৳)'}}</td>
                                 <td>{{$course->created_at}}</td>
+
                                 <td>
-                                    <div class="rounded-button">
-                                        <button type="button" class="btn mb-1 btn-rounded btn-info">Edit</button>
-                                    </div>
+                                    <a href="{{route('edit-course', $course->id)}}" class="btn btn-rounded btn-primary">
+                                        Edit
+                                    </a>
                                 </td>
                                 <td>
                                     <a href="{{route('video-play', $course->id)}}" class="btn btn-rounded btn-secondary">
@@ -129,9 +130,9 @@
                                                                         <td><span class="label gradient-9 label-pill label-danger">{{$video->is_free}}</span></td>
                                                                     @endif
                                                                     <td>
-                                                                        <div class="rounded-button">
-                                                                            <button type="button" class="btn mb-1 btn-rounded btn-info">Edit</button>
-                                                                        </div>
+                                                                        <a href="{{route('video-edit', $video->id)}}" class="btn btn-rounded btn-info">
+                                                                            Edit
+                                                                        </a>
                                                                     </td>
                                                                     <td>
                                                                         <a href="{{route('video-delete', ['id' => $video->id,'course_id' => $course->id])}}" class="btn btn-rounded btn-danger">

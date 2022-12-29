@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateLoginRequest;
+use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -42,10 +43,29 @@ class LoginController extends Controller
                 session()->put('user', $user);
                 Session::flash('statusCode', 'success');
                 Session::flash('check', 'login');
+
+
+                //For Admin Balance update
+                $sum = Subscription::where('status', 'approved')->sum('payable_amount');
+                Session::put('adminBalance', $sum);
+
                 return redirect()->route('admin-dashboard.index')->with('massage', 'You are successfully logged In:)');
             }
             else{
-                if(($user->type == 'instructor' && $user->permission == 'approved') || ($user->type == 'student')){
+                if(($user->type == 'instructor') && ($user->permission == 'approved')){
+                    //For Instructor Balance update
+                    /*$instructor = Subscription::where('instructor_id', $user->id);
+                    $sum = $instructor->where('status', 'approved')->sum('payable_amount');
+                    $profit = ($sum * 25) / 100;
+                    $user->balance = $sum - $profit;
+                    $user->save();*/
+
+                    session()->put('user', $user);
+                    Session::put('instructorBalance', $user->balance);
+                    Session::flash('statusCode', 'success');
+                    return redirect()->route('learnnet')->with('massage', 'You are successfully logged In:)');
+                }
+                elseif($user->type == 'student'){
                     session()->put('user', $user);
                     Session::flash('statusCode', 'success');
                     return redirect()->route('learnnet')->with('massage', 'You are successfully logged In:)');

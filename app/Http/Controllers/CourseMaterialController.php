@@ -40,24 +40,19 @@ class CourseMaterialController extends Controller
      */
     public function store(CreateMaterialRequest $request)
     {
-        $fileNames = [];
-        foreach ($request->file('file') as $file) {
-            $fileRandName = md5(rand(1000, 10000));
-            $extension = strtolower($file->getClientOriginalExtension());
-            $fileName = $fileRandName.'.'.$extension;
-            $file->move(public_path().'/materials/', $fileName);
-            $fileNames[] = $fileName;
-        }
-//        dd($fileNames);
+        $fileRandName = md5(rand(1000, 10000));
+        $extension = strtolower($request->file->getClientOriginalExtension());
+        $fileName = $fileRandName.'.'.$extension;
+        $request->file->move(public_path().'/materials/', $fileName);
 
 //        $files = json_encode($fileNames);
-        foreach ($fileNames as $singleFile){
-            CourseMaterial::create([
-                'title' => $request->title,
-                'course_id' => $request->courseId,
-                'fileName' => $singleFile
-            ]);
-        }
+
+        CourseMaterial::create([
+            'title' => $request->title,
+            'course_id' => $request->courseId,
+            'fileName' => $fileName
+        ]);
+
         $course = Course::find($request->courseId);
         $material_count = CourseMaterial::where('course_id', $request->courseId)->count();
 

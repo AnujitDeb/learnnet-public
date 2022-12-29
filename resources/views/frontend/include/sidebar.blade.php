@@ -14,7 +14,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/Dashboards/School">
+                        <a href="{{route('profile-edit')}}">
                             <span class="label">Account</span>
                         </a>
                     </li>
@@ -26,6 +26,19 @@
                     <a href="{{route('student-course.index')}}">
                         <i data-acorn-icon="online-class" class="icon" data-acorn-size="18"></i>
                         <span class="label">My course</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('courses')}}">
+                        <i data-acorn-icon="online-class" class="icon" data-acorn-size="18"></i>
+                        <span class="label">Courses</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{route('student-transaction.index')}}">
+                        <i data-acorn-icon="web-page" class="icon" data-acorn-size="18"></i>
+                        <span class="label">Transaction Statement</span>
                     </a>
                 </li>
 
@@ -42,18 +55,31 @@
                         <span class="label">Manage Course</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{route('enrolled-student', ['instructorId' => session('user.id')])}}">
+                        <i data-acorn-icon="destination" class="icon" data-acorn-size="18"></i>
+                        <span class="label">Enrolled Students</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{route('withdrawal-request')}}">
+                        <i data-acorn-icon="activity" class="icon" data-acorn-size="18"></i>
+                        <span class="label">Withdraw Money</span>
+                    </a>
+                </li>
 
                 <li>
                     <a href="{{route('instructor-transaction.index')}}">
                         <i data-acorn-icon="web-page" class="icon" data-acorn-size="18"></i>
                         <span class="label">Transaction Statement</span>
                     </a>
-
                 </li>
+
                 <li>
-                    <a href="{{route('enrolled-courses.index')}}">
-                        <i data-acorn-icon="destination" class="icon" data-acorn-size="18"></i>
-                        <span class="label">Enrolled Students</span>
+                    <a href="{{route('courses')}}">
+                        <i data-acorn-icon="online-class" class="icon" data-acorn-size="18"></i>
+                        <span class="label">Courses</span>
                     </a>
                 </li>
             @endif

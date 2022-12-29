@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\AdminBalance;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -30,6 +31,7 @@ class DatabaseSeeder extends Seeder
             'country'=>'Bangladesh',
             'institution'=>'SUB',
             'type'=>'admin',
+            'permission'=>'approved',
             'skill'=>'Ex-manager at some Company',
             'password'=>bcrypt('111111'),
             'remember_token'=> $this->str_random(10)
@@ -40,58 +42,11 @@ class DatabaseSeeder extends Seeder
             'last_name'=>'Kanti',
             'email'=>'prachurjakanti@gmail.com',
             'phone'=>'01688944648',
-            'country'=>'Canada',
+//            'country'=>'Canada',
             'institution'=>'MIST',
             'type'=>'instructor',
             'skill'=>'Teacher, trainer',
-            'password'=>bcrypt('111111'),
-            'remember_token'=> $this->str_random(10)
-        ]);
-        User::create([
-            'first_name'=>'Prachurja',
-            'last_name'=>'Kanti',
-            'email'=>'1prachurjakanti@gmail.com',
-            'phone'=>'02688944648',
-            'country'=>'Canada',
-            'institution'=>'MIST',
-            'type'=>'instructor',
-            'skill'=>'Teacher, trainer',
-            'password'=>bcrypt('111111'),
-            'remember_token'=> $this->str_random(10)
-        ]);
-        User::create([
-            'first_name'=>'Prachurja',
-            'last_name'=>'Kanti',
-            'email'=>'3prachurjakanti@gmail.com',
-            'phone'=>'03688944648',
-            'country'=>'Canada',
-            'institution'=>'MIST',
-            'type'=>'instructor',
-            'skill'=>'Teacher, trainer',
-            'password'=>bcrypt('111111'),
-            'remember_token'=> $this->str_random(10)
-        ]);
-        User::create([
-            'first_name'=>'Prachurja',
-            'last_name'=>'Kanti',
-            'email'=>'4prachurjakanti@gmail.com',
-            'phone'=>'04688944648',
-            'country'=>'Canada',
-            'institution'=>'MIST',
-            'type'=>'instructor',
-            'skill'=>'Teacher, trainer',
-            'password'=>bcrypt('111111'),
-            'remember_token'=> $this->str_random(10)
-        ]);
-        User::create([
-            'first_name'=>'Prachurja',
-            'last_name'=>'Kanti',
-            'email'=>'5prachurjakanti@gmail.com',
-            'phone'=>'05688944648',
-            'country'=>'Canada',
-            'institution'=>'MIST',
-            'type'=>'instructor',
-            'skill'=>'Teacher, trainer',
+            'permission'=>'approved',
             'password'=>bcrypt('111111'),
             'remember_token'=> $this->str_random(10)
         ]);
@@ -104,9 +59,11 @@ class DatabaseSeeder extends Seeder
             'country'=>'Brazil',
             'institution'=>'JU',
             'type'=>'student',
+            'permission'=>'approved',
             'password'=>bcrypt('111111'),
             'remember_token'=> $this->str_random(10)
         ]);
+
     }
 
     private function str_random(int $int)

@@ -1,6 +1,5 @@
 
 
-
 <!--**********************************
         Header start
     ***********************************-->
@@ -26,79 +25,63 @@
 <!--**********************************
     Content body start
 ***********************************-->
-        <div class="content-body">
+<div class="content-body">
 
-          <div class="col-lg-12" style="padding-top: 15px;">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title">
-                        <h4>Transaction Statement</h4>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead style="text-align: center">
+    <div class="col-lg-12" style="padding-top: 15px;">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    <h4>Transaction Statement</h4>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered zero-configuration">
+                        <thead>
+                        <tr class="text-center">
+                            <th>No</th>
+                            <th>Amount</th>
+                            <th>Payment Method</th>
+                            <th>Request Date</th>
+                            <th>Updated Date</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody style="text-align: center">
+                            @php
+                                $id = 1;
+                            @endphp
+                            @foreach($transactions as $transaction)
                                 <tr>
-                                    <th>No</th>
-                                    <th>Course Name</th>
-                                    <th>Publish Date</th>
-                                    <th>Request Date</th>
-                                    <th>Amount taka</th>
-                                    <th>Status</th>
+                                    <th>{{$id++}}</th>
+                                    <td>{{$transaction->amount . '(৳)'}}</td>
+                                    <td>{{$transaction->payment_method}}</td>
+                                    <td>{{$transaction->created_at}}</td>
+                                    <td>{{$transaction->updated_at}}</td>
+                                    @if($transaction->status == 'requested')
+                                        <td><span class="label gradient-3 label-pill label-primary">Pending</span></td>
+                                    @elseif($transaction->status == 'disbursed')
+                                        <td><span class="label gradient-0 label-pill label-success">Disbursed</span></td>
+                                    @else
+                                        <td><span class="label gradient-2 label-pill label-primary">Rejected</span></td>
+                                    @endif
 
-                                </tr>
-                            </thead>
-                            <tbody style="text-align: center">
-                                <tr>
-                                    <th>1</th>
-                                    <td>Course Name1</td>
-                                    <td>17-01-2022</td>
-                                    <td>20-04-2022</td>
-                                    <td>1800</td>
-                                    <td><span class="label gradient-2 label-pill label-primary">Not paid</span></td>
-
-                                </tr>
-                                <tr>
-                                    <th>2</th>
-                                    <td>Course Name2</td>
-                                    <td>05-03-2022</td>
-                                    <td>21-07-2022</td>
-                                    <td>4000</td>
-                                    <td><span class="label gradient-1 label-pill label-success">Approved</span></td>
-
-                                </tr>
-                                <tr>
-                                    <th>3</th>
-                                    <td>Course Name3</td>
-                                    <td>01-05-2022</td>
-                                    <td>20-8-2022</td>
-                                    <td>3500</td>
+                                    {{--<td><span class="label gradient-1 label-pill label-success">Approved</span></td>
                                     <td><span class="label gradient-3 label-pill label-primary">Void</span></td>
-
+                                    <td><span class="label gradient-7 label-pill label-primary">Hold</span></td>--}}
                                 </tr>
-                                <tr>
-                                  <th>4</th>
-                                  <td>Course Name4</td>
-                                  <td>20-08-2022</td>
-                                  <td>18-12-2022</td>
-                                    <td>2000</td>
-                                    <td><span class="label gradient-7 label-pill label-primary">Hold</span></td>
-
-                                </div>
-
-                              </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
-         </div>
-
-
-            <!-- #/ container -->
         </div>
-        <!--**********************************
-            Content body end
-        ***********************************-->
+    </div>
+
+
+    <!-- #/ container -->
+</div>
+<!--**********************************
+    Content body end
+***********************************-->
 
 
 

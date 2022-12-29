@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Subscription;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class StudentCourseController extends Controller
@@ -13,7 +15,12 @@ class StudentCourseController extends Controller
      */
     public function index()
     {
-        return view('backend.studentCourseList');
+        $subscriptions = Subscription::where('student_id', session('user.id'))
+            ->where('status', 'approved')->get();
+        $cnt = Subscription::where('student_id', session('user.id'))->count();
+//        dd($cnt);
+
+        return view('backend.studentCourseList', ['subscriptions' => $subscriptions, 'cnt' => $cnt]);
     }
 
     /**

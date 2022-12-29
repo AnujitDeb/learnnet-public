@@ -91,6 +91,7 @@ class CourseVideoPlayController extends Controller
         $course = Course::find($id);
         $materials = null;
         $materials = CourseMaterial::where('course_id', $id)->get();
+        $material_count = CourseMaterial::where('course_id', $id)->count();
 
         $videos = Video::where('course_id', $id)->get();
         $mainVideo = Video::where('course_id', $id)->get()->first();
@@ -100,7 +101,7 @@ class CourseVideoPlayController extends Controller
         }
 //        dd($first);
 
-        return view('videoPages.courseVideoPlay', ['course' => $course, 'videos' => $videos, 'materials' => $materials, 'mainVideo' => $mainVideo]);
+        return view('videoPages.courseVideoPlay', ['course' => $course, 'videos' => $videos, 'materials' => $materials, 'mainVideo' => $mainVideo, 'material_count' => $material_count]);
     }
 
     public function videoShow($video_id)
@@ -111,14 +112,9 @@ class CourseVideoPlayController extends Controller
 
         $course = Course::find($course_id);
         $materials = CourseMaterial::where('course_id', $course_id)->get();
+        $material_count = CourseMaterial::where('course_id', $course_id)->count();
 //        dd($materials);
 
-        foreach ($materials as $material) {
-            if(!$material){
-                $materials = null;
-                break;
-            }
-        }
 
         $videos = Video::where('course_id', $course_id)->get();
 
@@ -128,7 +124,7 @@ class CourseVideoPlayController extends Controller
         }
 //        dd($first);
 
-        return view('videoPages.courseVideoPlay', ['course' => $course, 'videos' => $videos, 'materials' => $materials, 'mainVideo' => $mainVideo]);
+        return view('videoPages.courseVideoPlay', ['course' => $course, 'videos' => $videos, 'materials' => $materials, 'mainVideo' => $mainVideo, 'material_count' => $material_count]);
 
     }
 }

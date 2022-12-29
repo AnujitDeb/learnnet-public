@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('course_id');
             $table->integer('student_id');
+            $table->integer('instructor_id');
             $table->string('transaction_id');
             $table->string('transaction_method');
             $table->double('payable_amount');

@@ -23,11 +23,10 @@
           <div class="col-lg-8 mx-auto" style="padding-top: 15px">
             <div class="card ">
                 <div class="card-body">
-                    <h4 class="card-header">Create Admin</h4>
+                    <h4 class="card-header" style="text-align: center;">Create Admin</h4>
                     <div class="basic-form">
                         <form action="{{route('create-admin.store')}}" method="post">
                             @csrf
-
 
                             <div class="row md-3 mt-3 mb-3">
                                 <div class="col-md-3 ">First Name :</div>

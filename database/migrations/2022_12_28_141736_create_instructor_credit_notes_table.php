@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('credit_notes', function (Blueprint $table) {
+        Schema::create('instructor_credit_notes', function (Blueprint $table) {
             $table->id();
-            $table->string('month');
             $table->double('amount');
             $table->integer('instructor_id');
-            $table->integer('status');
+            $table->string('status');
+            $table->string('account_number');
+            $table->string('transaction_method');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('credit_notes');
+        Schema::dropIfExists('instructor_credit_notes');
     }
 };

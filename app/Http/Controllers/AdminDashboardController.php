@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AdminDashboardController extends Controller
@@ -13,7 +15,12 @@ class AdminDashboardController extends Controller
      */
     public function index()
     {
-        return view('backend/adminDashboard');
+        $time = Carbon::now();
+        $date = $time->toDateString();
+
+        $studentCnt = User::where('type', 'student')->count();
+        $instructorCnt = User::where('type', 'instructor')->count();
+        return view('backend/adminDashboard', ['studentCnt' => $studentCnt, 'instructorCnt' => $instructorCnt, 'date' => $date]);
     }
 
     /**

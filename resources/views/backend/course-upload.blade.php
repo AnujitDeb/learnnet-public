@@ -33,7 +33,7 @@
                 <div class="col-lg-8 mx-auto">
                     <div class="card shadow">
                         <div class="card-header text-center" style="background-color: #7571F9;">
-                            <h2 class="text-white">Course Create Form</h2>
+                            <h2 class="text-white">Create Course</h2>
                         </div>
 
                         <div class="card-body">
@@ -162,8 +162,8 @@
                                 </div>
 
                                 <div class="" style="text-align: center">
-                                        <input type="submit" class="form-control btn btn-success btn-rounded text-white" name="createCourse"
-                                               value="Create Course" style="background-color: #7571F9; width: max-content;"/>
+                                    <input type="submit" class="form-control btn btn-success btn-rounded text-white" name="createCourse"
+                                           value="Create Course" style="background-color: #7571F9; width: max-content;"/>
                                 </div>
                             </form>
                         </div>

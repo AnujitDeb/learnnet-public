@@ -47,9 +47,9 @@
     <!--**********************************
         Nav header start
     ***********************************-->
-    <div class="nav-header">
+    <div class="nav-header"  style="background-color: #9E62C7;">
         <div class="brand-logo">
-            <a href="index.html">
+            <a href="{{route('learnnet')}}">
                 <b class="logo-abbr"><img src="asset/images/logo.png" alt=""> </b>
                 <span class="logo-compact"><img src="asset/images/logo-compact.png" alt=""></span>
                 <span class="brand-title">
@@ -62,60 +62,86 @@
         Nav header end
     ***********************************-->
 
-<div class="header">
+<div class="header  bg-transparent">
     <div class="header-content clearfix">
 
         <div class="nav-control">
             <div class="hamburger">
-                <span class="toggle-icon"><i class="icon-menu"></i></span>
+                <span class="toggle-icon"><i class="icon-menu text-white"></i></span>
             </div>
         </div>
         <div class="header-left">
             <div class="input-group icons">
             </div>
         </div>
-        <div class="header-right">
+        <div class="header-right" style="padding-top: 15px; padding-right: 15px; display: flex">
+            @if(session()->has('user'))
+                <div style="display: flex">
+                        @if(session('user.type') == 'admin')
 
-            <li class="icons dropdown">
-                <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
-                    <span class="activity active"></span>
-                    <img src="asset/images/niaz.jpg" height="40" width="40" alt="">
-                </div>
-                <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
-                    <div class="dropdown-content-body">
-                        <ul>
-                            <li>
-                                <a href="{{route('profile')}}"><i class="icon-user"></i> <span>Profile</span></a>
-                            </li>
-                            <li>
-                                <a href="app-profile.html"><i class="icon-user"></i> <span>Account</span></a>
-                            </li>
-                            <!-- <li>
-                                 <a href="javascript:void()">
-                                     <i class="icon-envelope-open"></i> <span>Inbox</span> <div class="badge gradient-3 badge-pill gradient-1">3</div>
-                                 </a>
-                             </li>-->
+                        @php
+                            $allSubscription = \App\Models\Subscription::all();
+                            $sumOfSubscription = $allSubscription->where('status', 'approved')->sum('payable_amount');
+                            //$sumOfSubscription = $sumOfSubscription - (($sumOfSubscription * 25) / 100);
 
-                            <hr class="my-2">
-                            <!--<li>
-                                <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
-                            </li>-->
-                            @if(session()->has('user'))
-                                <li>
-                                    <a href="{{route('logout')}}"><i class="icon-key"></i>
-                                        {{\Illuminate\Support\Facades\Session::flash('logoutCheck', 'backend')}}
-                                        <span>Logout</span>
-                                    </a>
+                            $allWithdraw = \App\Models\InstructorCreditNote::all();
+                            $sumOfWithdraw = $allWithdraw->where('status', 'disbursed')->sum('amount');
+
+                            $Adminbalance = $sumOfSubscription - $sumOfWithdraw;
+                        @endphp
+
+                            @if($Adminbalance == 0)
+                                <li style="padding-right: 5px">
+                                    <button class="btn btn-outline-danger" type="button" style="pointer-events: none;">
+                                        {{$Adminbalance.'(৳)'}}
+                                    </button>
                                 </li>
                             @else
-                                <li><a href="{{route('login.index')}}"><i class="icon-key"></i> <span>Login</span></a></li>
-                                <li><a href="{{route('register.index')}}"><i class="icon-key"></i> <span>Register</span></a></li>
+                                <li style="padding-right: 5px">
+                                    <button class="btn btn-outline-success" type="button" style="pointer-events: none;">
+                                        {{$Adminbalance.'(৳)'}}
+                                    </button>
+                                </li>
                             @endif
-                        </ul>
-                    </div>
+                        @elseif(session('user.type') == 'instructor')
+
+
+                        @php
+                            $instructor = \App\Models\Subscription::where('instructor_id', session('user.id'));
+                            $sumOfSubscription = $instructor->where('status', 'approved')->sum('payable_amount');
+                            $sumOfSubscription = $sumOfSubscription - (($sumOfSubscription * 25) / 100);
+
+                            $instructorWithdraw = \App\Models\InstructorCreditNote::where('instructor_id', session('user.id'));
+                            $sumOfWithdraw = $instructorWithdraw->where('status', 'disbursed')->sum('amount');
+
+                            $Instructorbalance = $sumOfSubscription - $sumOfWithdraw;
+                        @endphp
+
+                            @if($Instructorbalance == 0)
+                                <li style="padding-right: 5px">
+                                    <button class="btn btn-outline-danger" type="button" style="pointer-events: none;">
+                                        {{$Instructorbalance.'(৳)'}}
+                                    </button>
+                                </li>
+                            @else
+                                <li style="padding-right: 5px">
+                                    <button class="btn btn-outline-success" type="button" style="pointer-events: none;">
+                                        {{$Instructorbalance.'(৳)'}}
+                                    </button>
+                                </li>
+                            @endif
+                        @endif
+                        <li>
+                            <a href="{{route('logout')}}" class="btn btn-outline-primary">
+                                {{\Illuminate\Support\Facades\Session::flash('logoutCheck', 'backend')}}
+                                Logout
+                            </a>
+                        </li>
+            @else
+                <li style="padding-right: 5px"><a href="{{route('login.index')}}" class="btn btn-outline-primary">Login</a></li>
+                <li><a href="{{route('register.index')}}" class="btn btn-outline-primary">Register</a></li>
+            @endif
                 </div>
-            </li>
-            </ul>
         </div>
     </div>
 </div>

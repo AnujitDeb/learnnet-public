@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('country')->nullable();
+            $table->double('balance')->default(0)->nullable();
             $table->string('institution')->nullable();
             $table->string('image')->nullable();
             $table->enum('type', [UserType::Instructor, UserType::Student, UserType::Admin]);

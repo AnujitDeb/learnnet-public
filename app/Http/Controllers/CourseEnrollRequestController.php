@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminBalance;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -94,10 +95,24 @@ class CourseEnrollRequestController extends Controller
     }
 
     public function approve($subscriber_id){
+
+        //For user table update
         $subscriber = Subscription::find($subscriber_id);
 //        dd($subscriber);
         $subscriber->status = 'approved';
         $subscriber->save();
+
+        //For Admin Balance Update
+        $sum = Subscription::where('status', 'approved')->sum('payable_amount');
+        Session::put('adminBalance', $sum);
+        $profit = ($sum * 25) / 100;
+
+        //For student balace sheet of admin
+
+
+        //For Instructor Balance Update
+
+
         Session::flash('statusCode', 'success');
         return redirect()->back()->with('massage', 'The Payment Request is Approved');
     }
@@ -105,8 +120,13 @@ class CourseEnrollRequestController extends Controller
     public function unapprove($subscriber_id){
         $subscriber = Subscription::find($subscriber_id);
 //        dd($subscriber);
-        $subscriber->status = 'pending';
+        $subscriber->status = 'rejected';
         $subscriber->save();
+
+        //For Admin Balance update
+        $sum = Subscription::where('status', 'approved')->sum('payable_amount');
+        Session::put('adminBalance', $sum);
+
         Session::flash('statusCode', 'warning');
         return redirect()->back()->with('massage', 'The Payment Request is Unapproved!!!');
     }

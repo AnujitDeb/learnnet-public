@@ -1,6 +1,3 @@
-
-
-
 <!--**********************************
         Header start
     ***********************************-->
@@ -26,16 +23,17 @@
 <!--**********************************
     Content body start
 ***********************************-->
-        <div class="content-body">
+<div class="content-body">
 
-          <div class="col-lg-12" style="padding-top: 15px;">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title">
-                        <h4>Enrolled Students</h4>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
+    <div class="col-lg-12" style="padding-top: 15px;">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    <h4>Enrolled Students</h4>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        @if($cnt)
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -47,50 +45,41 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th>1</th>
-                                    <td>Name1</td>
-                                    <td>Course Name1</td>
-                                    <td>17-01-2022</td>
-                                    <td>1545</td>
 
-                                </tr>
-                                <tr>
-                                    <th>2</th>
-                                    <td>Name2</td>
-                                    <td>Course Name2</td>
-                                    <td>17-01-2022</td>
-                                    <td>5422</td>
+                            @php
+                                $id = 1;
+                            @endphp
 
-                                </tr>
-                                <tr>
-                                    <th>3</th>
-                                    <td>Name3</td>
-                                    <td>Course Name3</td>
-                                    <td>01-05-2022</td>
-                                    <td>4022</td>
+                            @foreach($subscriptions as $subscription)
 
-                                </tr>
+                                @php
+                                    $student = \App\Models\User::find($subscription->student_id);
+                                    $course = \App\Models\Course::find($subscription->course_id);
+                                @endphp
                                 <tr>
-                                  <th>4</th>
-                                  <td>Name4</td>
-                                  <td>Course Name4</td>
-                                    <td>17-01-2022</td>
-                                  <td>2642</td>
+                                    <th>{{$id++}}</th>
+                                    <td>{{$student->first_name}}</td>
+                                    <td>{{$course->title}}</td>
+                                    <td>{{$subscription->updated_at}}</td>
+                                    <td><span class="label gradient-1 label-pill label-primary">{{$course->discounted_price . ' (৳)'}}</span></td>
                                 </tr>
+                            @endforeach
+                        @else
+                            <h3 style="color: red; text-align: center">No Enrolled Student</h3>
+                        @endif
                             </tbody>
-                        </table>
-                    </div>
+                    </table>
                 </div>
             </div>
-         </div>
-
-
-            <!-- #/ container -->
         </div>
-        <!--**********************************
-            Content body end
-        ***********************************-->
+    </div>
+
+
+    <!-- #/ container -->
+</div>
+<!--**********************************
+    Content body end
+***********************************-->
 
 
 <!--**********************************

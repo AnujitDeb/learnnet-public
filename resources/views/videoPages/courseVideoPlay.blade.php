@@ -14,10 +14,17 @@
 <!-- Navbar section start -->
 <nav class="navbar navbar-expand-md navbar-light bg-black shadow mb-5" style="padding-bottom: 10px">
     <div class="container">
-        <a href="{{route('learnnet')}}" class="navbar-brand text-uppercase fw-bold text-white">Learnnet</a>
-        <ul class="navbar-nav ">
-            <li><a href="{{route('logout')}}" class="btn btn-primary">Logout</a></li>
-        </ul>
+        <div>
+            <a href="{{route('learnnet')}}" class="navbar-brand text-uppercase fw-bold text-white">Learnnet</a>
+        </div>
+        <div style="display: flex">
+            <ul class="navbar-nav " style="padding-right: 5px">
+                <li><a href="{{route('learnnet')}}" class="btn btn-outline-primary">Home</a></li>
+            </ul>
+            <ul class="navbar-nav ">
+                <li><a href="{{route('logout')}}" class="btn btn-outline-primary">Logout</a></li>
+            </ul>
+        </div>
     </div>
 </nav>
 <!-- Navbar section end -->
@@ -35,18 +42,8 @@
             </div>
 
             <div class="">
-                <h4 class="title">{{$mainVideo->title}}<span class="">
-                                @if($mainVideo->is_free == 'public')
-                            <i class="fa-solid fa-earth-americas text-white" style="font-size: 15px;"></i>
-                        @else
-                            <i class="fa-solid fa-lock text-white" style="font-size: 15px;"></i>
-                        @endif
-                            </span></h4>
-                <div class="">
-                    <h5 class="text-end" style="margin-top: -10px; margin-right:140px;">
-                        <span class="bg-warning  rounded-3">&ensp;<s>{{$course->original_price}}</s> {{---20%--}}<i
-                                class="text-danger fw-bold">{{$course->discounted_price}}</i>&ensp;</span>
-                    </h5>
+                <h4 class="title">{{$mainVideo->title}}</h4>
+                <div class="" style="text-align: right">
                     @php
                         $result = 0;
                         $videoId = $mainVideo->id;
@@ -63,12 +60,25 @@
                         }
                     @endphp
                     @if($result == 1)
+                        <h5 class="text-end" style="margin-top: -10px; margin-right:140px;">
+                        <span class="bg-warning  rounded-3">&ensp;<s>{{$course->original_price . '(৳)'}}</s> {{---20%--}}<i
+                                class="text-danger fw-bold">{{$course->discounted_price . '(৳)'}}</i>&ensp;</span>
+                        </h5>
                         <a href="{{route('payment', ['course' => $course, 'videoId' => $videoId])}}"
-                           class="btn btn-danger float-end"
-                           style="margin-top: -40px; margin-right:20px; pointer-events: none">Buy Now</a>
+                           class="btn btn-info float-end"
+                           style="margin-top: -40px; margin-right:20px; pointer-events: none">Pending</a>
                     @elseif($result == 0)
+                        <h5 class="text-end" style="margin-top: -10px; margin-right:140px;">
+                        <span class="bg-warning  rounded-3">&ensp;<s>{{$course->original_price . '(৳)'}}</s> {{---20%--}}<i
+                                class="text-danger fw-bold">{{$course->discounted_price . '(৳)'}}</i>&ensp;</span>
+                        </h5>
                         <a href="{{route('payment', ['course' => $course, 'videoId' => $videoId])}}"
                            class="btn btn-danger float-end" style="margin-top: -40px; margin-right:20px;">Buy Now</a>
+                    @else
+                        <h5 class="text-end" style="margin-top: -10px;">
+                        <span class="bg-warning  rounded-3">&ensp;<s>{{$course->original_price . '(৳)'}}</s> {{---20%--}}<i
+                                class="text-danger fw-bold">{{$course->discounted_price . '(৳)'}}</i>&ensp;</span>
+                        </h5>
                     @endif
                 </div>
             </div>
@@ -81,23 +91,35 @@
     <div class="col-md-12">
         <div class="video-list">
 
-            @foreach($videos as $video)
-                @if($video->is_free == 'public')
+            @if($result == 2)
+                @foreach($videos as $video)
                     <a href="{{route('video-show', $video->id)}}" style="text-decoration: none;">
-                        <div class="vid fa-solid fa-earth-americas text-white">
+                        <div class="vid fa-solid text-white">
                             <img src="{{asset('/thumbnails/'.$video->thumbnail)}}" alt="" height="50" width="50"/>
                             <h3 class="title">{{$video->title}}</h3>
                         </div>
                     </a>
-                @else
-                    <a href="{{route('video-show', $video->id)}}" style="pointer-events: none; text-decoration: none;">
-                        <div class="vid fa-solid fa-lock text-white">
-                            <img src="{{asset('/thumbnails/'.$video->thumbnail)}}" alt="" height="50" width="50"/>
-                            <h3 class="title">{{$video->title}}</h3>
-                        </div>
-                    </a>
-                @endif
-            @endforeach
+                @endforeach
+            @else
+                @foreach($videos as $video)
+                    @if($video->is_free == 'public')
+                        <a href="{{route('video-show', $video->id)}}" style="text-decoration: none;">
+                            <div class="vid fa-solid fa-earth-americas text-white">
+                                <img src="{{asset('/thumbnails/'.$video->thumbnail)}}" alt="" height="50" width="50"/>
+                                <h3 class="title">{{$video->title}}</h3>
+                            </div>
+                        </a>
+                    @else
+                        <a href="{{route('video-show', $video->id)}}"
+                           style="pointer-events: none; text-decoration: none;">
+                            <div class="vid fa-solid fa-lock text-white">
+                                <img src="{{asset('/thumbnails/'.$video->thumbnail)}}" alt="" height="50" width="50"/>
+                                <h3 class="title">{{$video->title}}</h3>
+                            </div>
+                        </a>
+                    @endif
+                @endforeach
+            @endif
 
 
         </div>
@@ -118,7 +140,7 @@
             <div class="col-md-12 mb-3">
                 <div class="card border-0 bg-dark text-white">
                     <div class="card-header bg-dark shadow">
-                        <h1>Description</h1>
+                        <h3>Description</h3>
                     </div>
                     <div class="card-body">
                         {{$course->description}}
@@ -129,7 +151,7 @@
             <div class="col-md-9 mb-3">
                 <div class="card bg-dark text-white">
                     <div class="card-header shadow">
-                        <h1>Prerequisite courses</h1>
+                        <h3>Prerequisite</h3>
                     </div>
                     <div class="card-body">
                         {{$course->prerequisite}}
@@ -140,11 +162,11 @@
             <div class="col-md-9 mb-3">
                 <div class="card bg-dark text-white">
                     <div class="card-header shadow">
-                        <h1>Course Materials</h1>
+                        <h3>Course Materials</h3>
                     </div>
                     <div class="card-body">
                         <table class="table table-dark table-striped">
-                            @if($materials)
+                            @if($material_count)
                                 <thead>
                                 <tr>
                                     <th scope="col">No</th>
@@ -177,7 +199,7 @@
                                 @endforeach
                                 </tbody>
                             @else
-                                <h5 style="text-align: center; color: red">No Material Uploaded</h5>
+                                <h6 style="text-align: center; color: red">No Material Uploaded !!!</h6>
                             @endif
                         </table>
                     </div>
@@ -193,7 +215,7 @@
 <footer class="bg-black py-3">
     <div class="container">
         <div class="row">
-            <h5 class="text-center text-white">Copyright © Designed & Developed by Learnnet 2022</h5>
+            <h5 class="text-center text-white">© LEARNNET   All Rights Reserved. Designed by LEARNNET</h5>
         </div>
     </div>
 </footer>

@@ -37,4 +37,10 @@ class AdminController extends Controller
         Session::flash('statusCode', 'warning');
         return redirect()->back()->with('massage', 'This instructor is suspended!!!');
     }
+
+    public function profileView($id){
+        $user = User::find($id);
+
+        return view('backend/userProfileViewForAdmin', ['user' => $user]);
+    }
 }

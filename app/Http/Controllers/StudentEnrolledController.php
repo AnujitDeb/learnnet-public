@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
+use App\Models\Subscription;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class StudentEnrolledController extends Controller
@@ -13,9 +16,11 @@ class StudentEnrolledController extends Controller
      */
     public function index()
     {
+        /*$instructor_id = session('user.id');
+        $subscriptions  = Subscription::where('instructor_id', $instructor_id)->get();
+        $courses = Course::find($subscriptions->course_id)->get();
+        $student = User::find($subscriptions->student_id)->get();*/
 
-
-        return view('backend.stuentEnrolledcourseList');
     }
 
     /**
@@ -82,5 +87,14 @@ class StudentEnrolledController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function enrolledStudentList($id){
+
+        $subscriptions = Subscription::where('instructor_id', $id)->get();
+        $cnt = Subscription::where('instructor_id', $id)->count();
+
+        return view('backend.stuentEnrolledcourseList', ['subscriptions' => $subscriptions, 'cnt' => $cnt]);
+
     }
 }

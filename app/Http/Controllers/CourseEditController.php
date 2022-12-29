@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CourseUpdateRequest;
 use App\Models\Course;
 use App\Models\CourseMaterial;
+use App\Models\User;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -92,7 +95,7 @@ class CourseEditController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
@@ -117,5 +120,45 @@ class CourseEditController extends Controller
 
         Session::flash('statusCode', 'warning');
         return redirect()->back()->with('massage', 'Successfully Deleted');
+    }
+
+
+    public function editCourse(Request $request){
+
+        $course = Course::find($request->id)->first();
+        return view('backend/course-edit', ['course' => $course]);
+    }
+
+    public function courseUpdate(CourseUpdateRequest $request){
+//        dd($request->all());
+
+        $course = Course::find($request->courseId);
+
+        if($request->thumbnail){
+            $file = $course->thumbnail;
+            $file_path = public_path('courseThumbnail/');
+            unlink($file_path.$file);
+
+            $img = $request->thumbnail;
+            $imgRandName = md5(rand(1000, 10000));
+            $extension = strtolower($img->getClientOriginalExtension());
+            $imgName = $imgRandName . '.' . $extension;
+            $img->move(public_path() . '/courseThumbnail/', $imgName);
+            $course->update([
+                'thumbnail' => $imgName
+            ]);
+        }
+
+        $course->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'prerequisite' => $request->prerequisite,
+            'status' => $request->status,
+            'original_price' => $request->originalPrice,
+            'discounted_price' => $request->discountedPrice
+        ]);
+
+        \Illuminate\Support\Facades\Session::flash('statusCode', 'success');
+        return redirect()->back()->with('massage', 'successfully Updated');
     }
 }

@@ -31,6 +31,7 @@ class UserPaymentRequestController extends Controller
             'transaction_method' => $request->transMethod,
             'transaction_id' => $request->transactionId,
             'course_id' => $course->id,
+            'instructor_id' => $course->instructor_id,
             'student_id' => session('user.id'),
             'payable_amount' => $course->discounted_price,
             'status' => 'pending'

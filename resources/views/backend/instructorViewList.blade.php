@@ -62,15 +62,16 @@
                                                         <td class="text-center">{{$id++}}</td>
                                                         <td class="text-center">{{$user['first_name']}}</td>
                                                         <td class="text-center">{{$user['email']}}</td>
-                                                        <td class="text-center">{{$user['created_at']}}</td>
-                                                        <td class="text-center"><img src="asset/images/praggo.jpg" alt="" height="50" width="80"/></td>
+                                                        <td class="text-center">{{$user['created_at']}}
+                                                        </td>
+                                                            @if($user->image)
+                                                                <td class="text-center"><img src="{{asset('/profilePic/'.$user->image)}}" style="width: 50px;" alt="image" ></td>
+                                                            @else
+                                                                <td class="text-center"><img src="asset/images/avatar.png" style="width: 50px;" alt="image" ></td>
+                                                            @endif
                                                         <td>
                                                             <div class="rounded-button" style="text-align: center">
-                                                                <form action="{{url("")}}" method="post">
-                                                                    @csrf
-                                                                    @method('UPDATE')
-                                                                    <button type="submit" class="btn mb-1 btn-rounded btn-info">Edit</button>
-                                                                </form>
+                                                                <a class="btn mb-1 btn-rounded btn-info" href="{{route("profile-view", ['id' => $user->id])}}">View</a>
                                                             </div>
                                                         </td>
                                                         <td>

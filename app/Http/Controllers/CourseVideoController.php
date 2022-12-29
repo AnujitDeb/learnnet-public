@@ -126,7 +126,46 @@ class CourseVideoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $video = Video::findOrFail($id);
+
+        if($video->video_link != $request->videoLink){
+            if (str_contains($request->videoLink, "youtube.com")) {
+                $url = parse_url($request->videoLink, PHP_URL_QUERY);
+                parse_str($url, $queries);
+                $videoId = $queries['v'];
+                $videoLink = sprintf(config("youtube.video_url"), $videoId);
+            } elseif (str_contains($request->videoLink, "youtu.be")) {
+                $split = explode('/', $request->videoLink);
+                $videoLink = sprintf(config("youtube.video_url"),  end($split));
+            }
+            $filnalLink = str_ireplace('watch?v=', 'embed/', $videoLink);
+
+            $video->video_link = $filnalLink;
+        }
+
+        if($request->thumbnail){
+            $file = $video->thumbnail;
+            $file_path = public_path('thumbnails/');
+            unlink($file_path . $file);
+
+            $img = $request->thumbnail;
+            $imgRandName = md5(rand(1000, 10000));
+            $extension = strtolower($img->getClientOriginalExtension());
+            $imgName = $imgRandName . '.' . $extension;
+            $img->move(public_path() . '/thumbnails/', $imgName);
+
+            $video->thumbnail = $imgName;
+        }
+
+        $video->title = $request->title;
+        $video->duration = $request->duration;
+        $video->is_free = $request->status;
+
+        $video->save();
+
+        Session::flash('statusCode', 'success');
+        return redirect()->route('course-edit', $request->course_id)->with('massage', 'Successfully Updated');
+
     }
 
     /**
@@ -158,4 +197,12 @@ class CourseVideoController extends Controller
     {
         return view('backend/materialView', ['fileName' => $fileName]);
     }
+
+    public function videoEdit($videoId){
+        $video = Video::find($videoId);
+
+        return view('backend.course-video-edit', ['video' => $video]);
+    }
+
+
 }

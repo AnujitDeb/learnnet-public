@@ -30,11 +30,14 @@ class registerController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        $img = $request->image;
-        $imgRandName = md5(rand(1000, 10000));
-        $extension = strtolower($img->getClientOriginalExtension());
-        $imgName = $imgRandName . '.' . $extension;
-        $img->move(public_path() . '/profilePic/', $imgName);
+        $imgName = null;
+        if($request->image){
+            $img = $request->image;
+            $imgRandName = md5(rand(1000, 10000));
+            $extension = strtolower($img->getClientOriginalExtension());
+            $imgName = $imgRandName . '.' . $extension;
+            $img->move(public_path() . '/profilePic/', $imgName);
+        }
 
 
         $request->merge(['password' => Hash::make($request->input('password'))]);

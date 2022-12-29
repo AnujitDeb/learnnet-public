@@ -21,6 +21,7 @@ class InstructorBackendController extends Controller
         if(($cnt) && (session()->has('user'))){
             $data = User::all()->where('type', 'instructor');
         }
+//        dd($data);
 
         return view('backend/instructorViewList', ['users'=>$data]);
 //        return view('backend/instructorBackend');

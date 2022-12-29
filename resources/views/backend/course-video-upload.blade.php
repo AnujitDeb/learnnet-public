@@ -32,7 +32,7 @@
                     <div class="col-lg-8 mx-auto">
                         <div class="card shadow">
                             <div class="card-header text-center" style="background-color: #7571F9;">
-                                <h2 class=" text-white">Course Video Upload Form</h2>
+                                <h2 class=" text-white">Upload Course Video</h2>
                             </div>
 
                             <div class="card-body">

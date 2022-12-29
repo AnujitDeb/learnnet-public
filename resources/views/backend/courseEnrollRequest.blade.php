@@ -76,7 +76,7 @@
                                             <a href="{{route('student-payment-aprroval', $subscriber)}}" class="btn btn-info btn-rounded" style="color: white" >Approve</a>
                                         </td>
                                         <td>
-                                            <a href="{{route('student-payment-unaprroval', $subscriber)}}" class="btn btn-danger btn-rounded" style="color: white;  pointer-events: none" >Unapprove</a>
+                                            <a href="{{route('student-payment-unaprroval', $subscriber)}}" class="btn btn-danger btn-rounded" style="color: white;" >Unapprove</a>
                                         </td>
                                     @endif
                                 </tr>

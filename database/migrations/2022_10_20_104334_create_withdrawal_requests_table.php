@@ -17,7 +17,10 @@ return new class extends Migration
             $table->id();
             $table->double('amount');
             $table->string('payment_method');
-            $table->integer('status');
+            $table->string('account_number');
+            $table->string('instructor_name');
+            $table->string('instructor_phone');
+            $table->string('status');
             $table->integer('instructor_id');
             $table->timestamps();
         });

@@ -11,6 +11,7 @@ class Subscription extends Model
     protected $fillable = [
         'transaction_method',
         'transaction_id',
+        'instructor_id',
         'course_id',
         'student_id',
         'payable_amount',

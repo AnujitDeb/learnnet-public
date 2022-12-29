@@ -16,7 +16,6 @@
 
             <!-- Sliding Picture Start -->
 
-
             <header>
 
                 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel"
@@ -100,15 +99,15 @@
                                 <div class="card mb-2">
                                     <div class="row g-0 sh-14">
                                         <div class="col-auto">
-                                            <a href="/Course/Detail" class="d-block position-relative h-100">
-                                                <img src="frontendAsset/img/course/small/c1.png" alt="alternate text"
+                                            <a href="{{route('video-play', $course->id)}}" class="d-block position-relative h-100">
+                                                <img src="{{asset('/courseThumbnail/'.$course->thumbnail)}}" alt="image" style="height: 110px; width: 50px"
                                                      class="card-img card-img-horizontal sw-14 sw-lg-18"/>
                                             </a>
                                         </div>
                                         <div class="col">
                                             <div class="card-body pt-0 pb-0 h-100 d-flex align-items-center">
                                                 <div class="w-100">
-                                                    <a href="/Course/Detail" class="font-heading mb-1">{{$course->title}}</a>
+                                                    <a href="{{route('video-play', $course->id)}}" class="font-heading mb-1">{{$course->title}}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -132,14 +131,11 @@
 
                     @foreach($courses as $course)
                         <div class="card w-100 sh-50 sh-md-40 h-xl-100-card hover-img-scale-up position-relative">
-                            <img src="frontendAsset/img/banner/laravel.png" class="card-img h-100 scale position-absolute"
+                            <img src="{{asset('/courseThumbnail/'.$course->thumbnail)}}" class="card-img h-100 scale position-absolute"
                                  alt="card image"/>
                             <div class="card-img-overlay d-flex flex-column justify-content-between bg-transparent">
                                 <div>
                                     <div class="cta-1 mb-3 text-white w-75 w-sm-50 opacity-75">{{$course->title}}
-                                    </div>
-                                    <div class="w-50 text-white mb-3 opacity-75">
-                                        {{$course->description}}
                                     </div>
                                     <div class="text-muted text-overline text-small">
                                         <del>{{$course->original_price.'(৳)'}}</del>
@@ -147,7 +143,7 @@
                                     <div>{{$course->discounted_price.'(৳)'}}</div>
                                 </div>
                                 <div>
-                                    <a href="/Course/Detail"
+                                    <a href="{{route('video-play', $course->id)}}"
                                        class="btn btn-icon btn-icon-start btn-primary mt-3 stretched-link">
                                         <i data-acorn-icon="chevron-right"></i>
                                         <span>View</span>
@@ -173,10 +169,10 @@
                 @foreach($courses as $course)
                     <div class="col">
                         <div class="card h-100">
-                            <img src="frontendAsset/img/course/small/course-4.webp" class="card-img-top sh-22"
+                            <img src="{{asset('/courseThumbnail/'.$course->thumbnail)}}" class="card-img-top sh-22"
                                  alt="card image"/>
                             <div class="card-body">
-                                <h5 class="heading mb-0"><a href="/Course/Detail" class="body-link stretched-link">{{$course->title}}</a></h5>
+                                <h5 class="heading mb-0"><a href="{{route('video-play', $course->id)}}" class="body-link stretched-link">{{$course->title}}</a></h5>
                             </div>
                             <div class="card-footer border-0 pt-0">
                                 <div class="card-text mb-0">
@@ -190,455 +186,6 @@
                     </div>
                 @endforeach
 
-
-
-                {{--<div class="col">
-                    <div class="card h-100">
-                        <img src="frontendAsset/img/course/small/course-5.webp" class="card-img-top sh-22"
-                             alt="card image"/>
-                        <div class="card-body">
-                            <h5 class="heading mb-0"><a href="/Course/Detail" class="body-link stretched-link">14 Facts
-                                    About Sugar</a></h5>
-                        </div>
-                        <div class="card-footer border-0 pt-0">
-                            <div class="mb-2">
-                                <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                                    <select class="rating" name="rating" autocomplete="off" data-readonly="true"
-                                            data-initial-rating="5">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                                <div class="text-muted d-inline-block text-small align-text-top">(221)</div>
-                            </div>
-                            <div class="card-text mb-0">
-                                <div class="text-muted text-overline text-small">
-                                    <del>$ 36.50</del>
-                                </div>
-                                <div>$ 15.25</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <span
-                            class="badge rounded-pill bg-primary me-1 position-absolute e-3 t-3 z-index-1">POPULAR</span>
-                        <img src="frontendAsset/img/course/small/course-6.webp" class="card-img-top sh-22"
-                             alt="card image"/>
-                        <div class="card-body">
-                            <h5 class="heading mb-0"><a href="/Course/Detail" class="body-link stretched-link">Apple
-                                    Cake Recipe</a></h5>
-                        </div>
-                        <div class="card-footer border-0 pt-0">
-                            <div class="mb-2">
-                                <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                                    <select class="rating" name="rating" autocomplete="off" data-readonly="true"
-                                            data-initial-rating="5">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                                <div class="text-muted d-inline-block text-small align-text-top">(572)</div>
-                            </div>
-                            <div class="card-text mb-0">
-                                <div class="text-muted text-overline text-small">
-                                    <del>$ 51.00</del>
-                                </div>
-                                <div>$ 36.80</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="frontendAsset/img/course/small/course-7.webp" class="card-img-top sh-22"
-                             alt="card image"/>
-                        <div class="card-body">
-                            <h5 class="heading mb-0"><a href="/Course/Detail" class="body-link stretched-link">Dough for
-                                    the Molds</a></h5>
-                        </div>
-                        <div class="card-footer border-0 pt-0">
-                            <div class="mb-2">
-                                <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                                    <select class="rating" name="rating" autocomplete="off" data-readonly="true"
-                                            data-initial-rating="5">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                                <div class="text-muted d-inline-block text-small align-text-top">(25)</div>
-                            </div>
-                            <div class="card-text mb-0">
-                                <div class="text-muted text-overline text-small">
-                                    <del>$ 18.25</del>
-                                </div>
-                                <div>$ 11.00</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col d-none d-xl-block">
-                    <div class="card h-100">
-                        <img src="frontendAsset/img/course/small/course-9.webp" class="card-img-top sh-22"
-                             alt="card image"/>
-                        <div class="card-body">
-                            <h5 class="heading mb-0"><a href="/Course/Detail" class="body-link stretched-link">Fruit
-                                    Decorations</a></h5>
-                        </div>
-                        <div class="card-footer border-0 pt-0">
-                            <div class="mb-2">
-                                <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                                    <select class="rating" name="rating" autocomplete="off" data-readonly="true"
-                                            data-initial-rating="5">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                                <div class="text-muted d-inline-block text-small align-text-top">(472)</div>
-                            </div>
-                            <div class="card-text mb-0">
-                                <div class="text-muted text-overline text-small">
-                                    <del>$ 24.00</del>
-                                </div>
-                                <div>$ 14.90</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-5 g-2 mb-5">
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="frontendAsset/img/course/small/course-4.webp" class="card-img-top sh-22"
-                             alt="card image"/>
-                        <div class="card-body">
-                            <h5 class="heading mb-0"><a href="/Course/Detail" class="body-link stretched-link">Introduction
-                                    to Bread Making</a></h5>
-                        </div>
-                        <div class="card-footer border-0 pt-0">
-                            <div class="mb-2">
-                                <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                                    <select class="rating" name="rating" autocomplete="off" data-readonly="true"
-                                            data-initial-rating="5">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                                <div class="text-muted d-inline-block text-small align-text-top">(39)</div>
-                            </div>
-                            <div class="card-text mb-0">
-                                <div class="text-muted text-overline text-small">
-                                    <del>$ 42.25</del>
-                                </div>
-                                <div>$ 27.50</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="frontendAsset/img/course/small/course-5.webp" class="card-img-top sh-22"
-                             alt="card image"/>
-                        <div class="card-body">
-                            <h5 class="heading mb-0"><a href="/Course/Detail" class="body-link stretched-link">14 Facts
-                                    About Sugar</a></h5>
-                        </div>
-                        <div class="card-footer border-0 pt-0">
-                            <div class="mb-2">
-                                <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                                    <select class="rating" name="rating" autocomplete="off" data-readonly="true"
-                                            data-initial-rating="5">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                                <div class="text-muted d-inline-block text-small align-text-top">(221)</div>
-                            </div>
-                            <div class="card-text mb-0">
-                                <div class="text-muted text-overline text-small">
-                                    <del>$ 36.50</del>
-                                </div>
-                                <div>$ 15.25</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <span
-                            class="badge rounded-pill bg-primary me-1 position-absolute e-3 t-3 z-index-1">POPULAR</span>
-                        <img src="frontendAsset/img/course/small/course-6.webp" class="card-img-top sh-22"
-                             alt="card image"/>
-                        <div class="card-body">
-                            <h5 class="heading mb-0"><a href="/Course/Detail" class="body-link stretched-link">Apple
-                                    Cake Recipe</a></h5>
-                        </div>
-                        <div class="card-footer border-0 pt-0">
-                            <div class="mb-2">
-                                <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                                    <select class="rating" name="rating" autocomplete="off" data-readonly="true"
-                                            data-initial-rating="5">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                                <div class="text-muted d-inline-block text-small align-text-top">(572)</div>
-                            </div>
-                            <div class="card-text mb-0">
-                                <div class="text-muted text-overline text-small">
-                                    <del>$ 51.00</del>
-                                </div>
-                                <div>$ 36.80</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="frontendAsset/img/course/small/course-7.webp" class="card-img-top sh-22"
-                             alt="card image"/>
-                        <div class="card-body">
-                            <h5 class="heading mb-0"><a href="/Course/Detail" class="body-link stretched-link">Dough for
-                                    the Molds</a></h5>
-                        </div>
-                        <div class="card-footer border-0 pt-0">
-                            <div class="mb-2">
-                                <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                                    <select class="rating" name="rating" autocomplete="off" data-readonly="true"
-                                            data-initial-rating="5">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                                <div class="text-muted d-inline-block text-small align-text-top">(25)</div>
-                            </div>
-                            <div class="card-text mb-0">
-                                <div class="text-muted text-overline text-small">
-                                    <del>$ 18.25</del>
-                                </div>
-                                <div>$ 11.00</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col d-none d-xl-block">
-                    <div class="card h-100">
-                        <img src="frontendAsset/img/course/small/course-9.webp" class="card-img-top sh-22"
-                             alt="card image"/>
-                        <div class="card-body">
-                            <h5 class="heading mb-0"><a href="/Course/Detail" class="body-link stretched-link">Fruit
-                                    Decorations</a></h5>
-                        </div>
-                        <div class="card-footer border-0 pt-0">
-                            <div class="mb-2">
-                                <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                                    <select class="rating" name="rating" autocomplete="off" data-readonly="true"
-                                            data-initial-rating="5">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                                <div class="text-muted d-inline-block text-small align-text-top">(472)</div>
-                            </div>
-                            <div class="card-text mb-0">
-                                <div class="text-muted text-overline text-small">
-                                    <del>$ 24.00</del>
-                                </div>
-                                <div>$ 14.90</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-5 g-2 mb-5">
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="frontendAsset/img/course/small/course-4.webp" class="card-img-top sh-22"
-                             alt="card image"/>
-                        <div class="card-body">
-                            <h5 class="heading mb-0"><a href="/Course/Detail" class="body-link stretched-link">Introduction
-                                    to Bread Making</a></h5>
-                        </div>
-                        <div class="card-footer border-0 pt-0">
-                            <div class="mb-2">
-                                <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                                    <select class="rating" name="rating" autocomplete="off" data-readonly="true"
-                                            data-initial-rating="5">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                                <div class="text-muted d-inline-block text-small align-text-top">(39)</div>
-                            </div>
-                            <div class="card-text mb-0">
-                                <div class="text-muted text-overline text-small">
-                                    <del>$ 42.25</del>
-                                </div>
-                                <div>$ 27.50</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="frontendAsset/img/course/small/course-5.webp" class="card-img-top sh-22"
-                             alt="card image"/>
-                        <div class="card-body">
-                            <h5 class="heading mb-0"><a href="/Course/Detail" class="body-link stretched-link">14 Facts
-                                    About Sugar</a></h5>
-                        </div>
-                        <div class="card-footer border-0 pt-0">
-                            <div class="mb-2">
-                                <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                                    <select class="rating" name="rating" autocomplete="off" data-readonly="true"
-                                            data-initial-rating="5">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                                <div class="text-muted d-inline-block text-small align-text-top">(221)</div>
-                            </div>
-                            <div class="card-text mb-0">
-                                <div class="text-muted text-overline text-small">
-                                    <del>$ 36.50</del>
-                                </div>
-                                <div>$ 15.25</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <span
-                            class="badge rounded-pill bg-primary me-1 position-absolute e-3 t-3 z-index-1">POPULAR</span>
-                        <img src="frontendAsset/img/course/small/course-6.webp" class="card-img-top sh-22"
-                             alt="card image"/>
-                        <div class="card-body">
-                            <h5 class="heading mb-0"><a href="/Course/Detail" class="body-link stretched-link">Apple
-                                    Cake Recipe</a></h5>
-                        </div>
-                        <div class="card-footer border-0 pt-0">
-                            <div class="mb-2">
-                                <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                                    <select class="rating" name="rating" autocomplete="off" data-readonly="true"
-                                            data-initial-rating="5">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                                <div class="text-muted d-inline-block text-small align-text-top">(572)</div>
-                            </div>
-                            <div class="card-text mb-0">
-                                <div class="text-muted text-overline text-small">
-                                    <del>$ 51.00</del>
-                                </div>
-                                <div>$ 36.80</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="frontendAsset/img/course/small/course-7.webp" class="card-img-top sh-22"
-                             alt="card image"/>
-                        <div class="card-body">
-                            <h5 class="heading mb-0"><a href="/Course/Detail" class="body-link stretched-link">Dough for
-                                    the Molds</a></h5>
-                        </div>
-                        <div class="card-footer border-0 pt-0">
-                            <div class="mb-2">
-                                <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                                    <select class="rating" name="rating" autocomplete="off" data-readonly="true"
-                                            data-initial-rating="5">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                                <div class="text-muted d-inline-block text-small align-text-top">(25)</div>
-                            </div>
-                            <div class="card-text mb-0">
-                                <div class="text-muted text-overline text-small">
-                                    <del>$ 18.25</del>
-                                </div>
-                                <div>$ 11.00</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col d-none d-xl-block">
-                    <div class="card h-100">
-                        <img src="frontendAsset/img/course/small/course-9.webp" class="card-img-top sh-22"
-                             alt="card image"/>
-                        <div class="card-body">
-                            <h5 class="heading mb-0"><a href="/Course/Detail" class="body-link stretched-link">Fruit
-                                    Decorations</a></h5>
-                        </div>
-                        <div class="card-footer border-0 pt-0">
-                            <div class="mb-2">
-                                <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                                    <select class="rating" name="rating" autocomplete="off" data-readonly="true"
-                                            data-initial-rating="5">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                                <div class="text-muted d-inline-block text-small align-text-top">(472)</div>
-                            </div>
-                            <div class="card-text mb-0">
-                                <div class="text-muted text-overline text-small">
-                                    <del>$ 24.00</del>
-                                </div>
-                                <div>$ 14.90</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>--}}
             <!-- Trending Courses End -->
 
         </div>

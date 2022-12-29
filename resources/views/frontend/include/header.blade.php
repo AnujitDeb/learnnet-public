@@ -13,6 +13,8 @@
     <meta name="description" content="Acorn elearning platform dashboard."/>
     <!-- Favicon Tags Start -->
 
+    <link rel="stylesheet" href="frontendAsset/css/all.css">
+
     <link rel="apple-touch-icon-precomposed" sizes="57x57" href="frontendAsset/img/favicon/apple-touch-icon-57x57.png"/>
     <link rel="apple-touch-icon-precomposed" sizes="114x114"
           href="frontendAsset/img/favicon/apple-touch-icon-114x114.png"/>
@@ -91,9 +93,9 @@
 
             <!-- User Menu Start -->
             <div class="user-container d-flex">
-                <a href="#" class="d-flex user position-relative" data-bs-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">
-                    @if(session()->has('user'))
+                <a href="#" class="d-flex user position-relative" data-bs-toggle="" aria-haspopup="false" style="pointer-events: none"
+                   aria-expanded="">
+                    @if(session()->has('user') && (session('user.image') != null))
                             <img class="profile" alt="profile" src="{{asset('/profilePic/'.session('user.image'))}}"/>
                             <div class="name">
                                 {{session('user.first_name')}}
@@ -101,7 +103,7 @@
                         @else
                             <img class="profile" alt="profile" src="asset/images/avatar.png"/>
                             <div class="name">
-                                User
+                                {{session('user.first_name')}}
                             </div>
                         @endif
                 </a>
