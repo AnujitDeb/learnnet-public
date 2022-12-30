@@ -25,7 +25,7 @@ class CreateCourseRequest extends FormRequest
     {
         return [
             'title' => 'required|min:3|string',
-            'description' => 'required|min:5|max:50',
+            'description' => 'required|min:5|max:5000',
             'prerequisite' => 'nullable|string',
             'thumbnail' => 'required',
             'thumbnail.*' => 'required|distinct|mimes:jpeg,png,jpg,svg|max:5120',

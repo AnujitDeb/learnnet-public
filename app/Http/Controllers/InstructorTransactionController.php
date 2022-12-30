@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PaymentWithdrwalRequest;
+use App\Models\InstructorCreditNote;
+use App\Models\Subscription;
 use App\Models\User;
 use App\Models\WithdrawalRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -14,7 +17,7 @@ class InstructorTransactionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -26,7 +29,7 @@ class InstructorTransactionController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -36,8 +39,8 @@ class InstructorTransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -47,8 +50,8 @@ class InstructorTransactionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function show($id)
     {
@@ -58,8 +61,8 @@ class InstructorTransactionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function edit($id)
     {
@@ -69,9 +72,9 @@ class InstructorTransactionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -81,8 +84,8 @@ class InstructorTransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function destroy($id)
     {
@@ -101,25 +104,32 @@ class InstructorTransactionController extends Controller
 
         $password = $instructor->password;
         $email = $instructor->email;
-        $balance = $instructor->balance;
+
+        $instructor = Subscription::where('instructor_id', session('user.id'));
+        $sumOfSubscription = $instructor->where('status', 'approved')->sum('payable_amount');
+        $sumOfSubscription = $sumOfSubscription - (($sumOfSubscription * 25) / 100);
+
+        $instructorWithdraw = InstructorCreditNote::where('instructor_id', session('user.id'));
+        $sumOfWithdraw = $instructorWithdraw->where('status', 'disbursed')->sum('amount');
+
+        $Instructorbalance = $sumOfSubscription - $sumOfWithdraw;
 
 //        dd($phone);
 
         $status = 'requested';
 
-        if(($request->amount == 0) || ($request->amount > $balance)){
+        if (($request->amount == 0) || ($request->amount > $Instructorbalance)) {
             Session::flash('statusCode', 'warning');
             return redirect()->back()->with('massage', 'Your given Amount is not valid');
         }
 
-        if(Hash::check($request->password, $password) && ($request->email == $email)){
+        if (Hash::check($request->password, $password) && ($request->email == $email)) {
             $withdrwalRequest = WithdrawalRequest::where('instructor_id', $request->user_id)->get();
             $check = $withdrwalRequest->where('status', 'requested')->first();
-            if($check){
+            if ($check) {
                 Session::flash('statusCode', 'warning');
                 return redirect()->back()->with('massage', 'Already one Withdrawal request is Pending');
-            }
-            else{
+            } else {
                 WithdrawalRequest::create([
                     'instructor_id' => $request->user_id,
                     'amount' => $request->amount,
@@ -132,8 +142,7 @@ class InstructorTransactionController extends Controller
                 Session::flash('statusCode', 'success');
                 return redirect('instructor-transaction')->with('massage', 'Withdrawal request is Pending');
             }
-        }
-        else{
+        } else {
             Session::flash('statusCode', 'warning');
             return redirect()->back()->with('massage', 'Your given email or password did not match');
         }
